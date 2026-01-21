@@ -9,6 +9,9 @@ from pathlib import Path
 # Ctrl + Shift + D
 # Click en Run and Debug
 
+
+# Funciones
+
 def load_matrix_robust(file_path):
     matrix_data = []
     with open(file_path, 'r') as f:
@@ -20,11 +23,26 @@ def load_matrix_robust(file_path):
                 matrix_data.append([int(c) for c in clean_line])
     return np.array(matrix_data)
 
+# Metodos
+
 def build_output_path(matrix_path, suffix="_reduced"):
+    """
+    Construye la ruta del archivo de salida agregando un sufijo al nombre original.
+    
+    :param matrix_path: Ruta del archivo de entrada.
+    :param suffix: Sufijo a añadir al nombre del archivo.
+    :return: Ruta del archivo de salida.
+    """
     path = Path(matrix_path)
     return path.with_name(path.stem + suffix + path.suffix)
 
 def save_matrix_txt(matrix, output_path):
+    """
+    Guarda una matriz NumPy en un archivo de texto.
+    
+    :param matrix: Matriz a guardar.
+    :param output_path: Ruta del archivo de salida.
+    """
     np.savetxt(output_path, matrix, fmt='%d')
     print(f"Matriz reducida guardada en: {output_path}")
 
@@ -47,7 +65,8 @@ def run_experiment(matrix_path, mode='C', alpha=0.15):
     # mapping[i] indica el índice del caso de test original correspondiente a la fila i
     # de la matriz reducida.
     reduced_matrix, mapping = apply_reductions(original_matrix, mode=mode)
-    
+
+    # Construye la ruta de salida incluyendo el modo de reducción y guarda la matriz resultante en un archivo .txt   
     output_path = build_output_path(matrix_path, f"_reduced_{mode}")
     save_matrix_txt(reduced_matrix, output_path)
 
@@ -80,28 +99,36 @@ def run_experiment(matrix_path, mode='C', alpha=0.15):
 
     report_statistics(results)
 
+
+ # ** Implementación main ***
+
+def main():
+
+    # Lista de archivos de matrices a procesar.
+    # Descomenta o añade rutas según los experimentos que quieras ejecutar.
+    matrix_files = [
+        "matrices/matrix_7_60_1.txt",
+        # "matrices/matrix_18_213_1.txt",
+        # "matrices/matrix_33_890_1.txt",
+        # "matrices/matrix_36_508_1.txt",
+        # "matrices/matrix_94_3647_1.txt",
+    ]
+
+    # Modos de ejecución del experimento
+    # Commenta los modos a no implementar
+    modes = (
+        "A",
+        "B",
+        "C"
+        )
+
+    # Ejecuta el experimento para cada combinación de matriz y modo
+    for matrix_path in matrix_files:
+        for mode in modes:
+            run_experiment(matrix_path, mode)
+
+
+# **** Ejecución segura ****
+
 if __name__ == "__main__":
-    # Ejecución de ejemplo
-    #  print("\n ** modo A **")
-      run_experiment("matrices/matrix_7_60_1.txt", mode='B')
-    #  print("\n ** modo B **")
-    #  run_experiment("matrices/matrix_7_60_1.txt", mode='B')
-    #  print("\n ** modo C **")
-    #  run_experiment("matrices/matrix_7_60_1.txt", mode='C')
-
-    # run_experiment("matrices/matrix_18_213_1.txt", mode='A')
-    # run_experiment("matrices/matrix_18_213_1.txt", mode='B')
-    # run_experiment("matrices/matrix_18_213_1.txt", mode='C')
-
-    # run_experiment("matrices/matrix_33_890_1.txt", mode='A')
-    # run_experiment("matrices/matrix_33_890_1.txt", mode='B')
-    # run_experiment("matrices/matrix_33_890_1.txt", mode='C')
-
-    # run_experiment("matrices/matrix_36_508_1.txt", mode='A')
-    # run_experiment("matrices/matrix_36_508_1.txt", mode='B')
-    # run_experiment("matrices/matrix_36_508_1.txt", mode='C')
-
-    # run_experiment("matrices/matrix_94_3647_1.txt", mode='A')
-    # run_experiment("matrices/matrix_94_3647_1.txt", mode='B')
-
-    #  run_experiment("matrices/matrix_94_3647_1.txt", mode='C')
+    main()
