@@ -47,6 +47,7 @@ La solución debe implementar un algoritmo GRASP que combine explícitamente las
 
 ---
 
+
 ## Métricas obligatorias
 
 El trabajo debe reportar, como mínimo, las siguientes métricas, calculadas en base a cobertura:
@@ -99,14 +100,6 @@ Para cada instancia del problema, se espera reportar:
 - El valor de **FDCLOSS**.
 
 Estas métricas permiten analizar el compromiso entre reducción de la suite y pérdida de cobertura.
-
-## Parametros
-
-En Grasp cada test solo puede seleccionarse una vez.
-
-### Alpha
-
-El parámetro α se estableció en 0.15 con el objetivo de favorecer la intensificación durante la fase constructiva del algoritmo GRASP, privilegiando la selección de tests con alta ganancia de cobertura. Este valor introduce un grado controlado de aleatoriedad mediante la Lista Restringida de Candidatos (RCL), permitiendo explorar distintas soluciones iniciales sin comprometer la calidad de la cobertura ni aumentar innecesariamente el tamaño de la suite resultante.
 
 
 ## Requisitos

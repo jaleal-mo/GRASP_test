@@ -83,10 +83,13 @@ def run_experiment(matrix_path, mode='C', alpha=0.15):
         solver = GRASPSolver(reduced_matrix, seed=seed)
         solution_indices_reduced, exec_time = solver.solve(alpha=alpha)
 
-        # TRADUCCIÓN CRÍTICA: Convertimos índices del solver a índices originales
+        # Traduce los índices obtenidos sobre la matriz reducida
+        # a los índices reales de la matriz original, utilizando
+        # el vector de trazabilidad generado durante la reducción
         solution_indices_original = mapping[list(solution_indices_reduced)]
         
-        # Ahora sí, el ID es el real del archivo original
+        # Convierte los índices internos (base 0) a los IDs reales de los tests (base 1),
+        # tal como aparecen en el archivo original
         tests_seleccionados = [int(i + 1) for i in solution_indices_original]
         
         print(f"\nSemilla {seed}: S = {sorted(tests_seleccionados)}")
