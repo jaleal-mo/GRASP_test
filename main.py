@@ -108,10 +108,10 @@ def main():
     # Descomenta o añade rutas según los experimentos que quieras ejecutar.
     matrix_files = [
         "matrices/matrix_7_60_1.txt",
-        # "matrices/matrix_18_213_1.txt",
-        # "matrices/matrix_33_890_1.txt",
-        # "matrices/matrix_36_508_1.txt",
-        # "matrices/matrix_94_3647_1.txt",
+        "matrices/matrix_18_213_1.txt",
+        "matrices/matrix_33_890_1.txt",
+        "matrices/matrix_36_508_1.txt",
+        "matrices/matrix_94_3647_1.txt",
     ]
 
     # Modos de ejecución del experimento
