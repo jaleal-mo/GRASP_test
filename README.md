@@ -45,8 +45,53 @@ La solución debe implementar un algoritmo GRASP que combine explícitamente las
 - La solución del algoritmo es una **suite reducida** \( S \subseteq T \).
 - No se dispone de fallos reales, por lo que la capacidad de detección de fallos se aproxima mediante **cobertura de requisitos**.
 
+## Parametros
+
+En Grasp cada test solo puede seleccionarse una vez.
+
+### Alpha
+
+El parámetro α se estableció en 0.15 con el objetivo de favorecer la intensificación durante la fase constructiva del algoritmo GRASP, privilegiando la selección de tests con alta ganancia de cobertura. Este valor introduce un grado controlado de aleatoriedad mediante la Lista Restringida de Candidatos (RCL), permitiendo explorar distintas soluciones iniciales sin comprometer la calidad de la cobertura ni aumentar innecesariamente el tamaño de la suite resultante.
+
+## 📊 Ganancia de un test en el algoritmo GRASP
+
+### ¿Qué significa la ganancia en GRASP?
+
+En el algoritmo **GRASP (Greedy Randomized Adaptive Search Procedure)**, la **ganancia de un test** es una medida **greedy** que indica cuántos **requisitos nuevos** aportaría ese test si se añadiera a la solución parcial actual.
+
+La ganancia se utiliza exclusivamente durante la **fase constructiva aleatorizada**, y su objetivo es guiar la selección de tests hacia aquellos que aportan mayor cobertura, manteniendo un equilibrio entre **greediness** y **aleatoriedad**.
+
 ---
 
+### Definición formal
+
+Sea:
+- \( T \) el conjunto total de tests.
+- \( R \) el conjunto de requisitos.
+- \( S \subseteq T \) la solución parcial construida hasta el momento.
+- \( U(S) \subseteq R \) el conjunto de requisitos ya cubiertos por \( S \).
+
+La **ganancia** de un test \( t \in T \setminus S \) se define como:
+
+\[
+\text{ganancia}(t) = | U(t) \setminus U(S) |
+\]
+
+Es decir, el número de requisitos que el test \( t \) cubre y que **aún no han sido cubiertos** por la solución parcial.
+
+---
+
+### ¿Cómo se calcula en el código?
+
+En la implementación, la ganancia se calcula con:
+
+```python
+uncovered_idx = np.where(~covered_reqs & target_reqs)[0]
+gains = np.sum(self.matrix[:, uncovered_idx], axis=1)
+```
+
+
+---
 
 ## Métricas obligatorias
 
