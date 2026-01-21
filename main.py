@@ -47,6 +47,8 @@ def save_matrix_txt(matrix, output_path):
     print(f"Matriz reducida guardada en: {output_path}")
 
 
+# α = define el umbral de la RCL, determinando cuantos candidatos "buenos" entran a la selección aleatoria
+# se coloca por defecto en 0.15 para que se tomen los RCL los test con ganancia alta
 def run_experiment(matrix_path, mode='C', alpha=0.15):
 
     print(f"\n ** modo {mode} **")
@@ -70,10 +72,14 @@ def run_experiment(matrix_path, mode='C', alpha=0.15):
     output_path = build_output_path(matrix_path, f"_reduced_{mode}")
     save_matrix_txt(reduced_matrix, output_path)
 
+    # Semillas
     seeds = [42, 123, 7, 99, 2024]
     results = []
     
     for seed in seeds:
+
+        # Ejecuta una iteracíon de GRASP sobre la matriz reducida
+        # Solution_indices_reduced = solución encontrada, exec_time = tiempo de ejecución
         solver = GRASPSolver(reduced_matrix, seed=seed)
         solution_indices_reduced, exec_time = solver.solve(alpha=alpha)
 
