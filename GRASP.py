@@ -3,14 +3,48 @@ import random
 import time
 
 class GRASPSolver:
+
+
     def __init__(self, matrix, seed):
+        # Guarda la matrix 
         self.matrix = matrix  # Filas = Tests, Columnas = Requisitos
+        # num_tests = filas (tests), num_reqs = columnas (requisitos)
         self.num_tests, self.num_reqs = matrix.shape
+        # Guarda la semilla
         self.seed = seed
+        # Inicializa la aleatoridad 
+        # permite múltiples ejecuciones independientes para explorar el espacio de soluciones
         random.seed(seed)
         np.random.seed(seed)
 
+
+
     def solve(self, alpha=0.1):
+        """
+        Ejecuta una iteración completa del algoritmo GRASP.
+
+        El método aplica secuencialmente una fase constructiva greedy aleatorizada y una
+        fase de mejora mediante búsqueda local, con el objetivo de obtener un subconjunto
+        de tests que cubra todos los requisitos con el menor tamaño posible. Además,
+        se mide el tiempo total de ejecución del algoritmo.
+
+        Parameters
+        ----------
+        alpha : float, optional
+            Parámetro de aleatoriedad (0 ≤ α ≤ 1) que controla la construcción de la
+            Lista Restringida de Candidatos (RCL) en la fase constructiva.
+            Por defecto, α = 0.1.
+
+        Returns
+        -------
+        tuple
+            - solution : list
+                Lista de índices de los tests seleccionados que conforman la solución final.
+            - execution_time : float
+                Tiempo total de ejecución del algoritmo GRASP en segundos.
+        """
+        
+        # Tiempo inicial del algoritmo Grasp
         start_time = time.time()
         
         # 1. Fase Constructiva Aleatorizada 
@@ -21,30 +55,72 @@ class GRASPSolver:
         
         execution_time = time.time() - start_time
         return solution, execution_time
+    
+
 
     def _constructive_phase(self, alpha):
+        """
+        Fase constructiva greedy aleatorizada del algoritmo GRASP.
+
+        Construye una solución inicial seleccionando iterativamente tests que maximizan
+        la ganancia de cobertura sobre los requisitos aún no cubiertos. En cada iteración,
+        se define una Lista Restringida de Candidatos (RCL) controlada por el parámetro α,
+        desde la cual se selecciona aleatoriamente el siguiente test.
+
+        La fase finaliza cuando todos los requisitos cubribles han sido cubiertos.
+
+        Parameters
+        ----------
+        alpha : float
+            Parámetro de aleatoriedad (0 ≤ α ≤ 1) que controla el equilibrio entre
+            comportamiento greedy y diversificación durante la construcción de la solución.
+
+        Returns
+        -------
+        list
+            Lista de índices de los tests seleccionados que conforman la solución inicial.
+        """
+
+        # Conjunto para almacenar los tests seleccionados (evita duplicados)
         solution = set()
+
+        # Vector booleano que indica qué requisitos ya han sido cubiertos
         covered_reqs = np.zeros(self.num_reqs, dtype=bool)
-        # Solo intentamos cubrir los requisitos que son cubribles
+
+        # Identifica los requisitos que son realmente cubribles
+        # (excluye columnas totalmente en cero o requisitos inválidos)
         target_reqs = np.any(self.matrix, axis=0) 
         
+        # Mientras existan requisitos cubribles sin cubrir,
+        # se siguen seleccionando tests
         while not np.all(covered_reqs[target_reqs]):
-            # Calcular ganancia marginal de cada test no seleccionado
+            
+            # Índices de los requisitos aún no cubiertos
             uncovered_idx = np.where(~covered_reqs & target_reqs)[0]
+
+            # Ganancia marginal de cada test:
+            # número de nuevos requisitos que cubriría
             gains = np.sum(self.matrix[:, uncovered_idx], axis=1)
             
+            # Mejor y peor test útil según ganancia
             max_g = np.max(gains)
             min_g = np.min(gains[gains > 0]) if np.any(gains > 0) else 0
             
-            # Umbral para la Lista Restringida de Candidatos (RCL) 
+            # Umbral minimo para construir la Lista Restringida de Candidatos (RCL)
+            # alpha controla el balance entre:
+            # - alpha → 0 : selección greedy pura
+            # - alpha → 1 : selección más aleatoria
             threshold = max_g - alpha * (max_g - min_g)
+
+            # RCL (Restricted Candidate List): 
+            # tests cuya ganancia supera el umbral 
             rcl = np.where(gains >= threshold)[0]
             
-            # Selección aleatoria de la RCL 
+            # Selección aleatoria de un test dentro de los mejores candidatos
             selected_test = random.choice(rcl)
             solution.add(selected_test)
             
-            # Actualizar cobertura
+             # Actualiza la cobertura acumulada de requisitos
             covered_reqs |= self.matrix[selected_test].astype(bool)
             
         return list(solution)
