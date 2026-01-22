@@ -12,16 +12,30 @@ from pathlib import Path
 
 # Funciones
 
+# def load_matrix_robust(file_path):
+#     matrix_data = []
+#     with open(file_path, 'r') as f:
+#         for line in f:
+#             line = line.strip()
+#             if not line: continue
+#             clean_line = line.replace(" ", "").replace("\t", "")
+#             if all(c in '01' for c in clean_line):
+#                 matrix_data.append([int(c) for c in clean_line])
+#     return np.array(matrix_data)
+
 def load_matrix_robust(file_path):
     matrix_data = []
     with open(file_path, 'r') as f:
         for line in f:
             line = line.strip()
-            if not line: continue
+            if not line:
+                continue
             clean_line = line.replace(" ", "").replace("\t", "")
             if all(c in '01' for c in clean_line):
                 matrix_data.append([int(c) for c in clean_line])
-    return np.array(matrix_data)
+
+    # Convierte a array y transpone (filas ↔ columnas)
+    return np.array(matrix_data).T
 
 # Metodos
 
