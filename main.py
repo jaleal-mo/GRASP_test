@@ -78,6 +78,17 @@ def run_experiment(matrix_path, mode='C', alpha=0.15):
     # de la matriz reducida.
     reduced_matrix, mapping = apply_reductions(original_matrix, mode=mode)
 
+    # Tamaños después del preprocesamiento
+    num_tests_red, num_reqs_red = reduced_matrix.shape
+
+    # Genera un resumen informativo de la matriz de cobertura, mostrando el número de
+    # casos de prueba y requisitos antes y después del preprocesamiento aplicado.
+    info_matriz = (
+        f"\n--- INFORMACIÓN DE LA MATRIZ ---\n"
+        f"Antes del preprocesamiento  -> Tests: {num_tests_orig} | Requerimientos: {num_reqs_orig}\n"
+        f"Después del preprocesamiento-> Tests: {num_tests_red} | Requerimientos: {num_reqs_red}\n\n"
+    )
+
     # Construye la ruta de salida incluyendo el modo de reducción y guarda la matriz resultante en un archivo .txt   
     output_path = build_output_path(matrix_path, f"_reduced_{mode}")
     save_matrix_txt(reduced_matrix, output_path)
@@ -124,6 +135,7 @@ def run_experiment(matrix_path, mode='C', alpha=0.15):
         
         results.append({'tssr': tssr, 'fdcloss': fdcloss, 'time': exec_time, 'size': len(solution_indices_original)})
 
+    report += info_matriz
     report += report_statistics(results)
 
     # Construye la ruta de salida incluyendo el modo de reducción y guarda la matriz resultante en un archivo .txt   
