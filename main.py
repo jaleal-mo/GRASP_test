@@ -108,6 +108,8 @@ def run_experiment(matrix_path, mode='C', alpha=0.15):
 
     report_statistics(results)
 
+    # TODO: Almacenar los resultados en un documento txt por cada algoritmo procesado y semilla
+    # analizar adecuadamente como tratarlo, así como las variables a almacenar.
 
  # ** Implementación main ***
 
