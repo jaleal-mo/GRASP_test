@@ -47,6 +47,16 @@ def save_matrix_txt(matrix, output_path):
     print(f"Matriz reducida guardada en: {output_path}")
 
 
+def save_string_txt(text, output_path):
+    """
+    Guarda un string directamente en un archivo de texto.
+    """
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(text)
+
+    print(f"Texto guardado en: {output_path}")
+
+
 # α = define el umbral de la RCL, determinando cuantos candidatos "buenos" entran a la selección aleatoria
 # se coloca por defecto en 0.15 para que se tomen los RCL los test con ganancia alta
 def run_experiment(matrix_path, mode='C', alpha=0.15):
@@ -106,10 +116,14 @@ def run_experiment(matrix_path, mode='C', alpha=0.15):
         
         results.append({'tssr': tssr, 'fdcloss': fdcloss, 'time': exec_time, 'size': len(solution_indices_original)})
 
-    report_statistics(results)
+    report = report_statistics(results)
 
     # TODO: Almacenar los resultados en un documento txt por cada algoritmo procesado y semilla
     # analizar adecuadamente como tratarlo, así como las variables a almacenar.
+    # Construye la ruta de salida incluyendo el modo de reducción y guarda la matriz resultante en un archivo .txt   
+    output_path = build_output_path(matrix_path, f"_Output_{mode}")
+    save_string_txt(report, output_path)
+
 
  # ** Implementación main ***
 

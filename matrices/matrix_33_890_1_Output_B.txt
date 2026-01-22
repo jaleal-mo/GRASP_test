@@ -1,0 +1,5 @@
+--- ESTADÍSTICOS FINALES (5 Semillas) ---
+    TSSR    -> Media: 0.9930 | Min: 0.9921 | Max: 0.9933 | Std: 0.0004
+    FDCLOSS -> Media: 0.0000 (Objetivo: 0.0000)
+    Tamaño S-> Media: 6.2 tests
+    Tiempo  -> Media: 0.003136s

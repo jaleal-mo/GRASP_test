@@ -44,6 +44,19 @@ def calculate_metrics(original_size, selected_size, matrix, selected_indices):
     # Retorna ambas métricas de evaluación
     return tssr, fdcloss
 
+
+def build_statistics_report(tssr_vals, fdcloss_vals, sizes, times):
+    report = f"""
+    --- ESTADÍSTICOS FINALES (5 Semillas) ---
+    TSSR    -> Media: {np.mean(tssr_vals):.4f} | Min: {np.min(tssr_vals):.4f} | Max: {np.max(tssr_vals):.4f} | Std: {np.std(tssr_vals):.4f}
+    FDCLOSS -> Media: {np.mean(fdcloss_vals):.4f} (Objetivo: 0.0000)
+    Tamaño S-> Media: {np.mean(sizes):.1f} tests
+    Tiempo  -> Media: {np.mean(times):.6f}s
+    """.strip()
+
+    return report
+
+
 def report_statistics(results):
     """
     Genera un reporte estadístico agregado a partir de múltiples ejecuciones
@@ -88,8 +101,10 @@ def report_statistics(results):
     # es decir, el número de tests seleccionados en la solución final
     sizes = [r['size'] for r in results]
     
-    print(f"\n--- ESTADÍSTICOS FINALES (5 Semillas) ---")
-    print(f"TSSR    -> Media: {np.mean(tssr_vals):.4f} | Min: {np.min(tssr_vals):.4f} | Max: {np.max(tssr_vals):.4f} | Std: {np.std(tssr_vals):.4f}")
-    print(f"FDCLOSS -> Media: {np.mean(fdcloss_vals):.4f} (Objetivo: 0.0000)")
-    print(f"Tamaño S-> Media: {np.mean(sizes):.1f} tests")
-    print(f"Tiempo  -> Media: {np.mean(times):.6f}s")
+    return build_statistics_report(tssr_vals, fdcloss_vals, sizes, times)
+
+    # print(f"\n--- ESTADÍSTICOS FINALES (5 Semillas) ---")
+    # print(f"TSSR    -> Media: {np.mean(tssr_vals):.4f} | Min: {np.min(tssr_vals):.4f} | Max: {np.max(tssr_vals):.4f} | Std: {np.std(tssr_vals):.4f}")
+    # print(f"FDCLOSS -> Media: {np.mean(fdcloss_vals):.4f} (Objetivo: 0.0000)")
+    # print(f"Tamaño S-> Media: {np.mean(sizes):.1f} tests")
+    # print(f"Tiempo  -> Media: {np.mean(times):.6f}s")
