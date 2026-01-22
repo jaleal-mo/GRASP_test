@@ -44,8 +44,13 @@ Semilla 2024: S = [8, 30, 32, 82, 216, 756]
   - Test 30 cubre: [13, 14, 15, 16, 17]
   - Test 32 cubre: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19]
 
+
+--- INFORMACIÓN DE LA MATRIZ ---
+Antes del preprocesamiento  -> Tests: 890 | Requerimientos: 34
+Después del preprocesamiento-> Tests: 890 | Requerimientos: 28
+
 --- ESTADÍSTICOS FINALES (5 Semillas) ---
     TSSR    -> Media: 0.9930 | Min: 0.9921 | Max: 0.9933 | Std: 0.0004
     FDCLOSS -> Media: 0.0000 (Objetivo: 0.0000)
     Tamaño S-> Media: 6.2 tests
-    Tiempo  -> Media: 0.001396s
+    Tiempo  -> Media: 0.001250s
