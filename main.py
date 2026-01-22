@@ -85,6 +85,8 @@ def run_experiment(matrix_path, mode='C', alpha=0.15):
     # Semillas
     seeds = [42, 123, 7, 99, 2024]
     results = []
+
+    report = ""
     
     for seed in seeds:
 
@@ -102,13 +104,19 @@ def run_experiment(matrix_path, mode='C', alpha=0.15):
         # tal como aparecen en el archivo original
         tests_seleccionados = [int(i + 1) for i in solution_indices_original]
         
+        # Encabezado de la semilla
+        report += f"Semilla {seed}: S = {sorted(tests_seleccionados)}\n\n"
         print(f"\nSemilla {seed}: S = {sorted(tests_seleccionados)}")
 
         # Detalle usando la matriz ORIGINAL para ver todos los bits y requisitos
         for idx_orig in solution_indices_original:
             fila = original_matrix[idx_orig]
             reqs = np.where(fila == 1)[0] + 1
+            report += f"  - Test {idx_orig + 1} cubre: {reqs.tolist()}\n"
             print(f"  - Test {idx_orig + 1} cubre: {reqs.tolist()}")
+
+        # Separación entre semillas
+        report += "\n"
         
         # CÁLCULO DE MÉTRICAS CON LOS ÍNDICES REALES
         tssr, fdcloss = calculate_metrics(num_tests_orig, len(solution_indices_original), 
@@ -116,10 +124,8 @@ def run_experiment(matrix_path, mode='C', alpha=0.15):
         
         results.append({'tssr': tssr, 'fdcloss': fdcloss, 'time': exec_time, 'size': len(solution_indices_original)})
 
-    report = report_statistics(results)
+    report += report_statistics(results)
 
-    # TODO: Almacenar los resultados en un documento txt por cada algoritmo procesado y semilla
-    # analizar adecuadamente como tratarlo, así como las variables a almacenar.
     # Construye la ruta de salida incluyendo el modo de reducción y guarda la matriz resultante en un archivo .txt   
     output_path = build_output_path(matrix_path, f"_Output_{mode}")
     save_string_txt(report, output_path)
