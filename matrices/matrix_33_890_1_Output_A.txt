@@ -1,5 +1,52 @@
+Semilla 42: S = [2, 29, 30, 70, 95, 272]
+
+  - Test 2 cubre: [1, 2, 3, 4, 5, 6]
+  - Test 272 cubre: [27, 28, 29, 30, 31, 32, 33, 34]
+  - Test 29 cubre: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19]
+  - Test 30 cubre: [13, 14, 15, 16, 17]
+  - Test 70 cubre: [20, 21, 22, 23]
+  - Test 95 cubre: [24, 25, 26]
+
+Semilla 123: S = [2, 29, 30, 70, 95, 272]
+
+  - Test 2 cubre: [1, 2, 3, 4, 5, 6]
+  - Test 272 cubre: [27, 28, 29, 30, 31, 32, 33, 34]
+  - Test 29 cubre: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19]
+  - Test 30 cubre: [13, 14, 15, 16, 17]
+  - Test 70 cubre: [20, 21, 22, 23]
+  - Test 95 cubre: [24, 25, 26]
+
+Semilla 7: S = [2, 29, 30, 70, 95, 271, 549]
+
+  - Test 2 cubre: [1, 2, 3, 4, 5, 6]
+  - Test 271 cubre: [28, 29, 30, 31, 32, 33, 34]
+  - Test 29 cubre: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19]
+  - Test 30 cubre: [13, 14, 15, 16, 17]
+  - Test 549 cubre: [27, 28, 31, 32, 33, 34]
+  - Test 70 cubre: [20, 21, 22, 23]
+  - Test 95 cubre: [24, 25, 26]
+
+Semilla 99: S = [2, 29, 30, 70, 95, 272]
+
+  - Test 2 cubre: [1, 2, 3, 4, 5, 6]
+  - Test 272 cubre: [27, 28, 29, 30, 31, 32, 33, 34]
+  - Test 29 cubre: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19]
+  - Test 30 cubre: [13, 14, 15, 16, 17]
+  - Test 70 cubre: [20, 21, 22, 23]
+  - Test 95 cubre: [24, 25, 26]
+
+Semilla 2024: S = [2, 29, 30, 70, 95, 271, 331]
+
+  - Test 2 cubre: [1, 2, 3, 4, 5, 6]
+  - Test 271 cubre: [28, 29, 30, 31, 32, 33, 34]
+  - Test 331 cubre: [27, 29, 32]
+  - Test 29 cubre: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19]
+  - Test 30 cubre: [13, 14, 15, 16, 17]
+  - Test 70 cubre: [20, 21, 22, 23]
+  - Test 95 cubre: [24, 25, 26]
+
 --- ESTADÍSTICOS FINALES (5 Semillas) ---
     TSSR    -> Media: 0.9928 | Min: 0.9921 | Max: 0.9933 | Std: 0.0006
     FDCLOSS -> Media: 0.0000 (Objetivo: 0.0000)
     Tamaño S-> Media: 6.4 tests
-    Tiempo  -> Media: 0.415057s
+    Tiempo  -> Media: 0.000725s
